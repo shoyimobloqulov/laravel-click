@@ -5,13 +5,31 @@ use Exception;
 
 class ClickException extends Exception
 {
-    const ERROR_SIGN_CHECK_FAILED = -1;
-    const ERROR_ALREADY_PAID = -4;
-    const ERROR_ORDER_NOT_FOUND = -5;
-    const ERROR_INVALID_AMOUNT = -6;
+    const ERROR_INTERNAL_SYSTEM = -32400;
+    const ERROR_INSUFFICIENT_PRIVILEGE = -32504;
+    const ERROR_INVALID_JSON_RPC_OBJECT = -32600;
+    const ERROR_METHOD_NOT_FOUND = -32601;
+    const ERROR_INVALID_AMOUNT = -31001;
+    const ERROR_TRANSACTION_NOT_FOUND = -31003;
+    const ERROR_INVALID_ACCOUNT = -31050;
+    const ERROR_COULD_NOT_CANCEL = -31007;
+    const ERROR_COULD_NOT_PERFORM = -31008;
+    public $error;
 
-    public function __construct($message, $code)
+    public function __construct($error_note, $error_code)
     {
-        parent::__construct($message, $code);
+        $this->error_note = $error_note;
+        $this->error_code = $error_code;
+
+        $this->error = ['error_code' => $this->error_code];
+
+        if ($this->error_note) {
+            $this->error['error_note'] = $this->error_note;
+        }
+    }
+
+    public function error()
+    {
+        return $this->error;
     }
 }
