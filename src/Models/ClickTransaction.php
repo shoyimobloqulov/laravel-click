@@ -1,28 +1,27 @@
 <?php
+
 namespace Shoyim\Click\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class ClickTransaction extends Model
 {
-    use HasFactory;
+    const ERROR_IN_REQUEST_CLICK = 'Error in request click';
+    const USER_DOES_NOT_EXISTS = 'User does not exist';
+    const TRANSACTION_DOES_NOT_EXISTS = 'Transaction does not exist';
+    const ALREADY_PAID = 'Already paid';
+    const SUCCESS = 0;
+    const ACTION_PREPARE = 0;
+    const ACTION_COMPLETE = 1;
 
     protected $fillable = [
         'click_trans_id',
-        'merchant_trans_id',
-        'click_paydoc_id',
-        'amount',
         'service_id',
-        'merchant_prepare_id',
-        'merchant_confirm_id',
-        'error',
-        'error_note',
+        'click_paydoc_id',
+        'merchant_trans_id',
+        'amount',
         'sign_time',
+        'situation',
+        'status',
     ];
-
-    public function service()
-    {
-        return $this->belongsTo(ClickService::class);
-    }
 }
