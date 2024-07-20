@@ -2,9 +2,6 @@
     "name": "shoyim/click",
     "description": "Laravel Click",
     "type": "composer-plugin",
-    "require": {
-
-    },
     "autoload": {
         "psr-4": {
             "Shoyim\\Click\\": "src/"
@@ -17,5 +14,7 @@
         }
     ],
     "version": "dev-main",
-    "license": "MIT"
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
