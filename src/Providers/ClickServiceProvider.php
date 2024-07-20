@@ -27,6 +27,8 @@ class ClickServiceProvider extends ServiceProvider
             __DIR__.'/../config/click.php' => config_path('click.php'),
         ], 'config');
 
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->publishes([
+            __DIR__ . '/../../database/migrations' => database_path('migrations'),
+        ], 'migrations');
     }
 }
