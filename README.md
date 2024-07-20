@@ -10,7 +10,7 @@ composer require shoyim/click
 
 #### Publish Configuration
 ```bash
-php artisan vendor:publish --provider="Shoyim\Click\ClickServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Shoyim\Click\Providers\ClickServiceProvider" --tag="config"
 # db migration
 php artisan migrate
 ```
