@@ -5,13 +5,13 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Shoyim\\LaravelClick\\": "src/"
+            "Shoyim\\Click\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Shoyim\\LaravelClick\\Providers\\ClickServiceProvider"
+                "Shoyim\\Click\\Providers\\ClickServiceProvider"
             ]
         }
     },
