@@ -29,5 +29,7 @@
                 "Click": "Shoyim\\Click\\Facades\\Click"
             }
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
