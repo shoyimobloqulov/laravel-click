@@ -4,13 +4,61 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "74eafb4c68e14e63a50b96d9441c2c54",
-    "packages": [],
+    "content-hash": "66adb085f461170c207441720b968da8",
+    "packages": [
+        {
+            "name": "shoyim/click",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/shoyimobloqulov/laravel-click.git",
+                "reference": "5699d92de6e630d85e820493c5ee1dbc67308078"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/shoyimobloqulov/laravel-click/zipball/5699d92de6e630d85e820493c5ee1dbc67308078",
+                "reference": "5699d92de6e630d85e820493c5ee1dbc67308078",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Shoyim\\Click\\Providers\\ClickServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Shoyim\\Click\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "ShoyimObloqulov",
+                    "email": "obloqulovshoyim1@gmail.com"
+                }
+            ],
+            "description": "Laravel click api services",
+            "support": {
+                "issues": "https://github.com/shoyimobloqulov/laravel-click/issues",
+                "source": "https://github.com/shoyimobloqulov/laravel-click/tree/main"
+            },
+            "time": "2024-07-20T10:50:17+00:00"
+        }
+    ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
-    "prefer-stable": false,
+    "stability-flags": {
+        "shoyim/click": 20
+    },
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],

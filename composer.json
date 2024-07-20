@@ -1,26 +1,35 @@
 {
-    "name": "shoyim/laravel-click",
-    "description": "Laravel click api services",
-    "type": "library",
-    "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "Shoyim\\Click\\": "src/"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Shoyim\\Click\\Providers\\ClickServiceProvider"
-            ]
-        }
-    },
-    "authors": [
-        {
-            "name": "ShoyimObloqulov",
-            "email": "obloqulovshoyim1@gmail.com"
-        }
-    ],
-    "minimum-stability": "dev",
-    "require": {}
+  "name": "shoyim/laravel-click",
+  "description": "Laravel click api services",
+  "require": {
+    "shoyim/click": "dev-main"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/shoyimobloqulov/laravel-click"
+    }
+  ],
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Shoyim\\Click\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Shoyim\\Click\\Providers\\ClickServiceProvider"
+      ]
+    }
+  },
+  "authors": [
+    {
+      "name": "ShoyimObloqulov",
+      "email": "obloqulovshoyim1@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }
