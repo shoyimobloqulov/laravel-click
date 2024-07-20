@@ -1,12 +1,13 @@
 <?php
-
 namespace Shoyim\Click\Models;
 
-class Transaction
+use Illuminate\Database\Eloquent\Model;
+
+class Transaction extends Model
 {
     const PAYMENT_SYSTEM_CLICK = 'click';
 
-    protected array $fillable = [
+    protected $fillable = [
         'user_id',
         'amount',
         'payment_system',

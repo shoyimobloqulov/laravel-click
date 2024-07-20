@@ -7,6 +7,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Shoyim\Click\Exceptions\ClickException;
+use Shoyim\Click\Http\Requests\CompleteRequest;
+use Shoyim\Click\Http\Requests\PrepareRequest;
 use Shoyim\Click\Models\ClickTransaction;
 use Shoyim\Click\Models\Transaction;
 
@@ -15,28 +17,8 @@ class ClickServices
     /**
      * @throws ClickException
      */
-    public function prepare(Request $request): JsonResponse
+    public function prepare(PrepareRequest $request): JsonResponse
     {
-        $validation = Validator::make($request->all(), [
-            'click_trans_id' => 'required|numeric|unique:click_transactions,click_trans_id',
-            'service_id' => 'required|numeric',
-            'merchant_trans_id' => 'required|string',
-            'amount' => 'required|numeric',
-            'action' => 'required|in:0,1',
-            'error' => 'required|in:0,1,2,3,4,5,6,7,8,9,10,11,12',
-            'error_note' => 'required|string',
-            'sign_time' => 'required',
-            'sign_string' => 'required|string',
-        ]);
-
-        if ($validation->fails()) {
-            throw new ClickException(ClickTransaction::ERROR_IN_REQUEST_CLICK);
-        }
-
-//        if($request->input('action') !== ClickTransaction::ACTION_PREPARE) {
-//            return $this->errorResponse(ClickTransaction::ACTION_NOT_FOUND);
-//        }
-
         $click_trans_id = $request->input('click_trans_id');
         $merchant_trans_id = $request->input('merchant_trans_id');
         $service_id = $request->input('service_id');
@@ -69,27 +51,8 @@ class ClickServices
     /**
      * @throws ClickException
      */
-    public function complete(Request $request): JsonResponse
+    public function complete(CompleteRequest $request): JsonResponse
     {
-        $validation = Validator::make($request->all(), [
-            'click_trans_id' => 'required|numeric',
-            'service_id' => 'required|numeric',
-            'merchant_trans_id' => 'required|string',
-            'amount' => 'required|numeric',
-            'action' => 'required|in:0,1',
-            'error' => 'required|in:0,1,2,3,4,5,6,7,8,9,10,11,12',
-            'error_note' => 'required|string',
-            'sign_time' => 'required',
-            'sign_string' => 'required|string',
-        ]);
-
-        if ($validation->fails()) {
-            throw new ClickException(ClickTransaction::ERROR_IN_REQUEST_CLICK);
-        }
-
-//        if($request->input('action') !== ClickTransaction::ACTION_COMPLETE) {
-//            return $this->errorResponse(ClickTransaction::ACTION_NOT_FOUND);
-//        }
         $merchant_trans_id = $request->input('merchant_trans_id');
         $user = User::where('id', $merchant_trans_id)->first();
         if(!$user){

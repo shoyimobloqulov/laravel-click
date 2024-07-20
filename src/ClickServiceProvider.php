@@ -8,6 +8,8 @@ class ClickServiceProvider extends ServiceProvider
 {
     public function register()
     {
+        $this->mergeConfigFrom(__DIR__.'/../config/click.php', 'click');
+
         $this->app->singleton('click', function ($app) {
             return new ClickClient();
         });
@@ -15,6 +17,10 @@ class ClickServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->publishes([
+            __DIR__.'/../config/click.php' => config_path('click.php'),
+        ], 'config');
+
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
     }
 }
