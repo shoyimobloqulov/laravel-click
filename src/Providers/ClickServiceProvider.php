@@ -1,8 +1,10 @@
 <?php
 
-namespace Shoyim\Click;
+namespace Shoyim\Click\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Shoyim\Click\Helpers\ClickHelper;
+use Shoyim\Click\Services\ClickRequest;
 
 class ClickServiceProvider extends ServiceProvider
 {
@@ -14,7 +16,7 @@ class ClickServiceProvider extends ServiceProvider
             return new ClickClient();
         });
 
-        $this->app->singleton(ClickRequest::class, function ($app) {
+        $this->app->singleton(\Providers::class, function ($app) {
             return new ClickRequest($app->make('request'), new ClickHelper());
         });
     }
