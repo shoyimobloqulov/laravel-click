@@ -13,6 +13,10 @@ class ClickServiceProvider extends ServiceProvider
         $this->app->singleton('click', function ($app) {
             return new ClickClient();
         });
+
+        $this->app->singleton(ClickRequest::class, function ($app) {
+            return new ClickRequest($app->make('request'), new ClickHelper());
+        });
     }
 
     public function boot()

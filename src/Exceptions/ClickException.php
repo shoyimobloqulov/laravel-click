@@ -19,6 +19,8 @@ class ClickException extends Exception
     const ERROR_IN_REQUEST_CLICK = -8;
     const TRANSACTION_CANCELLED = -9;
     const IP_NOT_ALLOWED = -10;
+    const ERROR_INVALID_JSON_RPC_OBJECT = 1;
+    const ERROR_COULD_NOT_PERFORM = 2;
     public function __construct(mixed $error)
     {
         $this->error = [
