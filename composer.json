@@ -15,5 +15,7 @@
             "name": "ShoyimObloqulov",
             "email": "obloqulovshoyim1@gmail.com"
         }
-    ]
+    ],
+    "version": "dev-main",
+    "license": "MIT"
 }
