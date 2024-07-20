@@ -5,7 +5,7 @@ Detailed documentation is available here __https://docs.click.uz__.
 
 ## Installation via Composer
 ```
-composer require shoyim/click
+composer require shoyim/click dev-main
 ```
 
 #### Publish Configuration
