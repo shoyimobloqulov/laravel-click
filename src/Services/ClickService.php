@@ -1,105 +1,98 @@
 <?php
+namespace Shoyim\Click\Services;
 
-use GuzzleHttp\Client;
-
-use Illuminate\Support\Facades\Request;
-use Shoyim\Click\Models\ClickData;
+use Illuminate\Support\Facades\Log;
 use Shoyim\Click\Models\ClickTransaction;
-use Shoyim\Click\Exceptions\ClickException;
+
 class ClickService
 {
-    protected $client;
+    protected $service;
 
-    public function __construct()
+    public function __construct(ClickService $service)
     {
-        $this->client = new Client([
-            'base_uri' => config('click.endpoint_url'),
-        ]);
+        $this->service = $service;
     }
 
-    public function handleRequest(Request $request)
+    public function prepare($data): array
     {
-        $data = new ClickData($request);
+        // Проверка сигнатуры
+        $expectedSignString = md5(
+            $data['click_trans_id'] .
+            $data['service_id'] .
+            $this->service->secret_key .
+            $data['merchant_trans_id'] .
+            $data['amount'] .
+            $data['action'] .
+            $data['sign_time']
+        );
 
-        // Konfiguratsiya
-        $config = [
-            'secret_key' => config('click.secret_key'),
+        if ($data['sign_string'] !== $expectedSignString) {
+            return [
+                'error' => -1,
+                'error_note' => 'SIGN CHECK FAILED!',
+            ];
+        }
+
+        // Логика проверки и сохранения транзакции
+        $transaction = ClickTransaction::updateOrCreate(
+            ['click_trans_id' => $data['click_trans_id']],
+            $data
+        );
+
+        // Возвращаем успешный ответ
+        return [
+            'click_trans_id' => $data['click_trans_id'],
+            'merchant_trans_id' => $data['merchant_trans_id'],
+            'merchant_prepare_id' => $transaction->id,
+            'error' => 0,
+            'error_note' => 'Success',
         ];
+    }
 
-        // Ma'lumotni tekshirish
-        $data->validate($config);
+    public function complete($data)
+    {
+        // Проверка сигнатуры
+        $expectedSignString = md5(
+            $data['click_trans_id'] .
+            $data['service_id'] .
+            $this->service->secret_key .
+            $data['merchant_trans_id'] .
+            $data['merchant_prepare_id'] .
+            $data['amount'] .
+            $data['action'] .
+            $data['sign_time']
+        );
 
-        // Harakatni tekshirish
-        if ($data->action == 0) {
-            return $this->prepare($data);
-        } elseif ($data->action == 1) {
-            return $this->complete($data);
-        } else {
-            throw new ClickException('Action not found', ClickException::ERROR_ORDER_NOT_FOUND);
+        if ($data['sign_string'] !== $expectedSignString) {
+            return [
+                'error' => -1,
+                'error_note' => 'SIGN CHECK FAILED!',
+            ];
         }
-    }
 
-    private function prepare(ClickData $data)
-    {
-        $response = $this->client->post('/prepare', [
-            'json' => [
-                'click_trans_id' => $data->click_trans_id,
-                'service_id' => $data->service_id,
-                'amount' => $data->amount,
-                'merchant_trans_id' => $data->merchant_trans_id,
-                'sign_string' => $data->sign_string,
-            ],
-        ]);
-
-        $responseBody = json_decode($response->getBody()->getContents(), true);
-
-        // To'lov ma'lumotlarini saqlash
-        ClickTransaction::create([
-            'click_trans_id' => $data->click_trans_id,
-            'service_id' => $data->service_id,
-            'click_paydoc_id' => $data->click_paydoc_id,
-            'merchant_trans_id' => $data->merchant_trans_id,
-            'amount' => $data->amount,
-            'action' => $data->action,
-            'error' => $data->error,
-            'error_note' => $data->error_note,
-            'sign_time' => $data->sign_time,
-            'sign_string' => $data->sign_string,
-            'status' => 'pending',
-        ]);
-
-        return $responseBody;
-    }
-
-    private function complete(ClickData $data)
-    {
-        $response = $this->client->post('/complete', [
-            'json' => [
-                'click_trans_id' => $data->click_trans_id,
-                'merchant_trans_id' => $data->merchant_trans_id,
-                'sign_string' => $data->sign_string,
-            ],
-        ]);
-
-        $responseBody = json_decode($response->getBody()->getContents(), true);
-
-        // To'lov holatini yangilash
-        $transaction = ClickTransaction::where('merchant_trans_id', $data->merchant_trans_id)->first();
-
+        // Логика завершения транзакции
+        $transaction = ClickTransaction::where('click_trans_id', $data['click_trans_id'])->first();
         if (!$transaction) {
-            throw new ClickException('Order not found', ClickException::ERROR_ORDER_NOT_FOUND);
+            return [
+                'error' => -6,
+                'error_note' => 'Transaction does not exist',
+            ];
         }
 
-        if ($transaction->amount != $data->amount) {
-            throw new ClickException('Invalid amount', ClickException::ERROR_INVALID_AMOUNT);
-        }
+        // Обновляем статус транзакции
+        $transaction->update([
+            'merchant_confirm_id' => $data['merchant_confirm_id'],
+            'error' => $data['error'],
+            'error_note' => $data['error_note'],
+        ]);
 
-        if ($transaction->status == 'completed') {
-            throw new ClickException('Already paid', ClickException::ERROR_ALREADY_PAID);
-        }
-
-        $transaction->update(['status' => 'completed']);
-
-        return $responseBody;
+        // Возвращаем успешный ответ
+        return [
+            'click_trans_id' => $data['click_trans_id'],
+            'merchant_trans_id' => $data['merchant_trans_id'],
+            'merchant_confirm_id' => $data['merchant_confirm_id'],
+            'error' => $data['error'],
+            'error_note' => $data['error_note'],
+        ];
     }
 }

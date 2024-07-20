@@ -1,10 +1,10 @@
 <?php
+
 namespace Shoyim\Click\Exceptions;
 
 use Exception;
 
-class ClickException extends Exception
-{
+class ClickException extends Exception{
     const ERROR_INTERNAL_SYSTEM = -32400;
     const ERROR_INSUFFICIENT_PRIVILEGE = -32504;
     const ERROR_INVALID_JSON_RPC_OBJECT = -32600;
@@ -15,6 +15,10 @@ class ClickException extends Exception
     const ERROR_COULD_NOT_CANCEL = -31007;
     const ERROR_COULD_NOT_PERFORM = -31008;
     public $error;
+
+    /**
+     * ClickException contructor
+     */
 
     public function __construct($error_note, $error_code)
     {
@@ -28,6 +32,9 @@ class ClickException extends Exception
         }
     }
 
+    /**
+     * @return array array-like
+     */
     public function error()
     {
         return $this->error;

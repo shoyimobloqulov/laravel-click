@@ -1,26 +1,28 @@
 <?php
-
 namespace Shoyim\Click\Models;
 
-class ClickTransaction
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class ClickTransaction extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'click_trans_id',
-        'service_id',
-        'click_paydoc_id',
         'merchant_trans_id',
+        'click_paydoc_id',
         'amount',
-        'action',
+        'service_id',
+        'merchant_prepare_id',
+        'merchant_confirm_id',
         'error',
         'error_note',
         'sign_time',
-        'sign_string',
-        'status'
     ];
 
-    protected $attributes = [
-        'status' => 'pending'
-    ];
+    public function service()
+    {
+        return $this->belongsTo(ClickService::class);
+    }
 }

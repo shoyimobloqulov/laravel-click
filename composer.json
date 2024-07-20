@@ -1,26 +1,19 @@
 {
-  "name": "shoyim/click",
-  "description": "A Laravel package for Click payment integration.",
-  "type": "library",
-  "require": {
-    "php": "^7.3|^8.0",
-    "illuminate/support": "^7.0|^8.0|^9.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "Shoyim\\Click\\": "src/"
-    }
-  },
-  "extra": {
-    "laravel": {
-      "providers": [
-        "Shoyim\\Click\\ClickServiceProvider"
-      ],
-      "aliases": {
-        "Click": "Shoyim\\Click\\Facades\\Click"
-      }
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true
+    "name": "shoyim/click",
+    "description": "Laravel Click",
+    "type": "composer-plugin",
+    "require": {
+
+    },
+    "autoload": {
+        "psr-4": {
+            "Shoyim\\Click\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ShoyimObloqulov",
+            "email": "obloqulovshoyim1@gmail.com"
+        }
+    ]
 }
