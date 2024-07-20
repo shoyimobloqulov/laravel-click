@@ -1,6 +1,6 @@
 ## Installation via Composer
 ```
-
+composer require shoyim/click
 ```
 
 #### Click configuration
