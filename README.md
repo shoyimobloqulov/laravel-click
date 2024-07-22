@@ -1,8 +1,8 @@
 # CLICK Integration Laravel
-[![Total Downloads](https://poser.pugx.org/shoyim/laravel-click/d/total.svg)](https://packagist.org/packages/shoyim/click)
-[![Latest Stable Version](https://poser.pugx.org/shoyim/laravel-click/v/stable.svg)](https://packagist.org/packages/shoyim/click)
-[![Latest Unstable Version](https://poser.pugx.org/shoyim/laravel-click/v/unstable.svg)](https://packagist.org/packages/shoyim/click)
-[![License](https://poser.pugx.org/shoyim/laravel-click/license.svg)](https://packagist.org/packages/shoyim/click)
+[![Total Downloads](https://poser.pugx.org/shoyim/click/d/total.svg)](https://packagist.org/packages/shoyim/click)
+[![Latest Stable Version](https://poser.pugx.org/shoyim/click/v/stable.svg)](https://packagist.org/packages/shoyim/click)
+[![Latest Unstable Version](https://poser.pugx.org/shoyim/click/v/unstable.svg)](https://packagist.org/packages/shoyim/click)
+[![License](https://poser.pugx.org/shoyim/click/license.svg)](https://packagist.org/packages/shoyim/click)
 
 This library allows you to integrate payment acceptance using `"CLICK"` payment system into `PHP` web applications.
 For the library to function properly, the user must be connected to Click Merchant using the Shop API scheme.
