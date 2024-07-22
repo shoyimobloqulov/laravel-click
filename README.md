@@ -3,7 +3,7 @@
 [![Latest Unstable Version](https://poser.pugx.org/shoyim/click/v/unstable.svg)](https://packagist.org/packages/shoyim/click)
 [![License](https://poser.pugx.org/shoyim/click/license.svg)](https://packagist.org/packages/shoyim/click)
 
-> [!CLICK Integration Laravel]
+> [!CLICK]
 > This library allows you to integrate payment acceptance using `"CLICK"` payment system into `Laravel` web applications.
 > For the library to function properly, the user must be connected to Click Merchant using the Shop API scheme.
 > Detailed documentation is available here __https://docs.click.uz__.
